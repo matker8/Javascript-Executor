@@ -1,0 +1,73 @@
+// Create elements for the GUI
+const container = document.createElement('div');
+container.style.position = 'fixed';
+container.style.top = '20px';
+container.style.left = '20px';
+container.style.width = '400px';
+container.style.padding = '10px';
+container.style.backgroundColor = '#333';
+container.style.color = 'white';
+container.style.borderRadius = '8px';
+container.style.fontFamily = 'Arial, sans-serif';
+
+// Add a title
+const title = document.createElement('h3');
+title.innerText = 'JavaScript Code Executor';
+title.style.textAlign = 'center';
+container.appendChild(title);
+
+// Create a text area for user input
+const codeInput = document.createElement('textarea');
+codeInput.style.width = '100%';
+codeInput.style.height = '150px';
+codeInput.style.padding = '5px';
+codeInput.style.marginBottom = '10px';
+codeInput.style.backgroundColor = '#222';
+codeInput.style.color = 'white';
+codeInput.style.border = '1px solid #555';
+codeInput.placeholder = 'Write your JavaScript code here...';
+container.appendChild(codeInput);
+
+// Create a button to run the code
+const runButton = document.createElement('button');
+runButton.innerText = 'Run Code';
+runButton.style.width = '100%';
+runButton.style.padding = '10px';
+runButton.style.backgroundColor = '#007bff';
+runButton.style.color = 'white';
+runButton.style.border = 'none';
+runButton.style.borderRadius = '5px';
+runButton.style.cursor = 'pointer';
+runButton.onclick = () => {
+    const code = codeInput.value;
+    const output = executeCode(code);
+    resultArea.innerText = output !== undefined ? output : 'Code executed.';
+};
+container.appendChild(runButton);
+
+// Create an output area to display results or errors
+const resultArea = document.createElement('pre');
+resultArea.style.marginTop = '10px';
+resultArea.style.padding = '10px';
+resultArea.style.backgroundColor = '#222';
+resultArea.style.color = '#00ff00';
+resultArea.style.border = '1px solid #555';
+resultArea.style.height = '100px';
+resultArea.style.overflowY = 'scroll';
+container.appendChild(resultArea);
+
+// Append the container to the body
+document.body.appendChild(container);
+
+// JavaScript code execution function
+function executeCode(userCode) {
+    try {
+        const func = new Function(userCode);
+        return func(); // Execute and return the result
+    } catch (error) {
+        return 'Error: ' + error.message; // Handle any errors
+    }
+}
+
+// Example default code
+codeInput.value = `// Example: simple addition\nreturn 2 + 2;`;
